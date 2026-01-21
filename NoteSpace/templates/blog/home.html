@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<header class="navbar">
+    <div class="logo">NoteSpace</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="#">Blogs</a>
+        <a href="#">Categories</a>
+        <a href="#">About</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <img src="{{ posts.0.image.url }}">
+    <div class="hero-text">
+        <span>{{ posts.0.category }}</span>
+        <h1>{{ posts.0.title }}</h1>
+        <p>{{ posts.0.content|truncatewords:40 }}</p>
+    </div>
+</section>
+
+<section class="posts">
+    <h2>Latest Blog Posts</h2>
+    <div class="post-grid">
+        {% for post in posts %}
+        <div class="post-card">
+            <img src="{{ post.image.url }}">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content|truncatewords:20 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
