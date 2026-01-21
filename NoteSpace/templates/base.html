@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NoteSpace{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Optional: Add a favicon or Google Fonts if you want custom typography -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="/">NoteSpace</a>
+        </div>
+
+        <nav class="nav-links">
+            {% if user.is_authenticated %}
+            <span class="user-greeting">Hi, {{ user.username }}</span>
+            <form action="/accounts/logout/" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:none;border:none;color:blue;cursor:pointer;">
+                    Logout
+                </button>
+            </form>
+
+            {% else %}
+            <a href="/accounts/login/" class="nav-btn login">Login</a>
+            <a href="/register/" class="nav-btn signup">Sign Up</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Optional footer if you want to add later -->
+    <!-- <footer>...</footer> -->
+</body>
+
+</html>
