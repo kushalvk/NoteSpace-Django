@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import RegisterForm
 from django.contrib.auth import login
+from django.core.paginator import Paginator
 
 def home(request):
     posts = Post.objects.filter(status='published').order_by('-created_at')
@@ -20,3 +21,12 @@ def register(request):
         form = RegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+def blog_list(request):
+    posts = Post.objects.filter(status="published").order_by("-created_at")
+    paginator = Paginator(posts, 6)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "blog/blog_list.html", {"page_obj": page_obj})

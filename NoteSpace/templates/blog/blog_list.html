@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}All Blogs - NoteSpace{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+<div class="blogs-hero">
+  <div class="container">
+    <h1 class="page-title">All Stories</h1>
+    <p class="page-subtitle">Discover inspiring thoughts, stories, and ideas from our community</p>
+  </div>
+</div>
+
+<section class="blogs-section">
+  <div class="container">
+    <!-- Filter Bar (optional future use) -->
+    <div class="filters">
+      <a href="#" class="filter-btn active">All</a>
+      <a href="#" class="filter-btn">Technology</a>
+      <a href="#" class="filter-btn">Life</a>
+      <a href="#" class="filter-btn">Design</a>
+    </div>
+
+    <div class="post-grid">
+      {% for post in page_obj %}
+      <article class="post-card">
+        <div class="post-image">
+          <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+          <span class="post-category">{{ post.category }}</span>
+        </div>
+        <div class="post-content">
+          <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.content|truncatewords:18 }}</p>
+          <div class="post-meta">
+            <time datetime="{{ post.created|date:'Y-m-d' }}">{{ post.created|date:"M d, Y" }}</time>
+            <a href="{{ post.get_absolute_url }}" class="read-more">Read Story →</a>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <div class="empty-state">
+        <h3>No posts yet</h3>
+        <p>Be the first to share your story on NoteSpace!</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination" aria-label="Blog pagination">
+      <div class="pagination-container">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}" class="pag-btn prev" rel="prev">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            Previous
+          </a>
+        {% endif %}
+
+        <div class="page-numbers">
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <span class="pag-num active">{{ num }}</span>
+            {% else %}
+              <a href="?page={{ num }}" class="pag-num">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="pag-btn next" rel="next">
+            Next
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

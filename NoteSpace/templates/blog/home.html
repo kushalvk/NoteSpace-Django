@@ -1,15 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+{% block title %}Home - NoteSpace{% endblock %}
+
 {% block content %}
 
-<header class="navbar">
-    <div class="logo">NoteSpace</div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="#">Blogs</a>
-        <a href="#">Categories</a>
-        <a href="#">About</a>
-    </nav>
-</header>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <section class="hero">
     {% if posts %}
