@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Category
 from .forms import RegisterForm
 from django.contrib.auth import login
 from django.core.paginator import Paginator
@@ -30,3 +30,12 @@ def blog_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "blog/blog_list.html", {"page_obj": page_obj})
+
+def category_post(request, slug):
+    category = Category.objects.get(slug = slug)
+    posts = Post.objects.filter(category = category, status="published")
+
+    return render(request, "blog/category_posts.html", {
+        "category": category,
+        "post": posts
+    })
