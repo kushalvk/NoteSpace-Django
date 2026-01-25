@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }} – NoteSpace{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Profile Hero Section -->
+    <section class="profile-hero mb-5 pb-4">
+        <div class="container">
+            <div class="hero-content text-center">
+                <!-- Avatar -->
+                <div class="profile-avatar mx-auto mb-4 position-relative">
+                    {% if profile_user.profile_picture %}
+                    <img src="{{ profile_user.profile_picture.url }}" alt="{{ profile_user.username }}"
+                        class="rounded-circle shadow-xl img-fluid"
+                        style="width:160px; height:160px; object-fit: cover; border: 6px solid white;">
+                    {% else %}
+                    <div class="avatar-fallback rounded-circle d-flex align-items-center justify-content-center shadow-xl"
+                        style="width:160px; height:160px; font-size:5.5rem; background: linear-gradient(135deg, #3b82f6, #60a5fa); color:white;">
+                        {{ profile_user.username|slice:":1"|upper }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Name & Info -->
+                <h1 class="page-title mb-2">
+                    {{ profile_user.get_full_name|default:profile_user.username }}
+                </h1>
+
+                <p class="lead text-muted mb-1">@{{ profile_user.username }}</p>
+
+                {% if profile_user.bio %}
+                <p class="profile-bio mx-auto mb-4" style="max-width:720px; font-size:1.18rem; line-height:1.7;">
+                    {{ profile_user.bio }}
+                </p>
+                {% endif %}
+
+                <!-- Badges & Quick Actions -->
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                    <span class="badge bg-primary-subtle text-primary px-4 py-2 fs-6">
+                        Joined {{ profile_user.date_joined|date:"F Y" }}
+                    </span>
+
+                    {% if profile_user == user %}
+                    <a href="{% url 'create_post' %}"
+                        class="btn btn-primary px-4 py-2 shadow-sm d-flex align-items-center gap-2">
+                        <i class="bi bi-plus-lg fs-5"></i>
+                        Write New Post
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ PERFECTED Stats & Action Hub ✨ -->
+    <section class="stats-hub text-center mb-5">
+        <div class="container">
+            <div class="stats-container mx-auto">
+                <!-- Stats Grid – Perfectly Balanced -->
+                <div class="stats-grid">
+                    <!-- Stories Count -->
+                    <div class="stat-card elevate-on-hover" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-icon">
+                            <i class="bi bi-journal-text"></i>
+                        </div>
+                        <h3 class="stat-number display-3 fw-extrabold mb-3">
+                            {{ post_count|default:0 }}
+                        </h3>
+                        <p class="stat-label fs-5 fw-semibold text-muted mb-0">
+                            {% if profile_user == user %}
+                            Your Published Stories
+                            {% else %}
+                            {{ profile_user.username }}'s Stories
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Join Date -->
+                    <div class="stat-card elevate-on-hover" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h3 class="stat-number display-4 fw-extrabold mb-3 text-gradient">
+                            {{ profile_user.date_joined|date:"F Y" }}
+                        </h3>
+                        <p class="stat-label fs-5 fw-semibold text-muted mb-0">
+                            Joined NoteSpace
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons – Perfect Center & Responsive -->
+                <div class="action-buttons mt-5">
+                    <div class="row g-3 g-md-4 justify-content-center">
+                        <!-- View Blogs Button -->
+                        <div class="col-12 col-md-6 col-lg-5">
+                            <a href="{% url 'user_posts' profile_user.username %}"
+                                class="action-btn primary-outline w-100 elevate-on-hover d-flex align-items-center justify-content-center gap-3 py-4 px-5 rounded-4 shadow-lg"
+                                data-aos="fade-up" data-aos-delay="300">
+                                <i class="bi bi-journal-text fs-3"></i>
+                                <span class="d-none d-md-inline fw-semibold fs-5 lh-sm">
+                                    {% if profile_user == user %}
+                                    My Blogs
+                                    {% else %}
+                                    {{ profile_user.username }}'s Blogs
+                                    {% endif %}
+                                </span>
+                                <span class="d-md-none fw-semibold fs-6 lh-sm">Blogs</span>
+                            </a>
+                        </div>
+
+                        <!-- Edit Profile Button -->
+                        {% if profile_user == user %}
+                        <div class="col-12 col-md-6 col-lg-5">
+                            <a href="{% url 'edit_profile' %}"
+                                class="action-btn primary-solid w-100 elevate-on-hover d-flex align-items-center justify-content-center gap-3 py-4 px-5 rounded-4 shadow-lg"
+                                data-aos="fade-up" data-aos-delay="400">
+                                <i class="bi bi-pencil-square fs-3"></i>
+                                <span class="fw-semibold fs-5 lh-sm">Edit Profile</span>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<style>
+    /* ────────────────────────────────────────────────
+    ✨ PERFECTED PROFILE STATS & ACTIONS HUB ✨
+    ─────────────────────────────────────────────── */
+
+    /* Stats Hub Container */
+    .stats-hub {
+        padding: 4rem 0;
+        background: linear-gradient(135deg, rgba(249, 250, 251, 0.7) 0%, rgba(255, 255, 255, 0.95) 100%);
+        border-radius: 0 0 48px 48px;
+        margin: -2rem -1rem 3rem -1rem;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stats-container {
+        max-width: 900px;
+    }
+
+    /* Stats Grid – Perfect 2-column balanced */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        margin-bottom: 3rem;
+        padding: 0 1rem;
+    }
+
+    /* Individual Stat Cards */
+    .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 28px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Stat Icons */
+    .stat-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        color: white;
+        font-size: 1.75rem;
+    }
+
+    /* Hover Animation */
+    .elevate-on-hover {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .elevate-on-hover:hover {
+        transform: translateY(-16px) scale(1.02);
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Action Buttons */
+    .action-btn {
+        height: 76px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        font-size: 1.1rem;
+    }
+
+    .action-btn.primary-solid {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+        color: white;
+        box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+    }
+
+    .action-btn.primary-solid:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 24px 56px rgba(59, 130, 246, 0.5);
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%);
+    }
+
+    .action-btn.primary-outline {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        color: #3b82f6;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    }
+
+    .action-btn.primary-outline:hover {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 48px rgba(59, 130, 246, 0.4);
+        border-color: transparent;
+    }
+
+    /* Text Gradient */
+    .text-gradient {
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Responsive Perfection */
+    @media (max-width: 992px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 500px;
+        }
+
+        .stats-hub {
+            padding: 3rem 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-card {
+            padding: 2.5rem 2rem;
+            min-height: 200px;
+        }
+
+        .action-btn {
+            height: 68px;
+            padding: 0 2rem;
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .stats-hub {
+            margin: -1rem -0.5rem 2rem;
+            padding: 2.5rem 1rem;
+        }
+
+        .stats-grid {
+            gap: 1.5rem;
+        }
+
+        .action-buttons .row>div {
+            padding: 0 0.25rem !important;
+        }
+    }
+
+    /* Smooth Animations */
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .elevate-on-hover:hover {
+        animation: floatUp 1.5s ease-in-out infinite;
+    }
+</style>
+
+{% endblock %}

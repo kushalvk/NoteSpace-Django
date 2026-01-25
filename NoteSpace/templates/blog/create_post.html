@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create New Post – NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Hero-style header -->
+    <section class="category-hero mb-5">
+        <div class="container">
+            <div class="hero-content text-center">
+                <span class="category-badge">New Post</span>
+                <h1 class="page-title">Create New Story</h1>
+                <p class="page-subtitle">
+                    Share your thoughts, experiences, or knowledge with the world
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form card – glassmorphism + centered -->
+    <div class="post-card mx-auto" style="max-width: 920px;">
+        <div class="post-content p-4 p-md-5">
+
+            <h3 class="mb-4 fw-semibold text-center" style="color: #111827;">
+                Write Your Post
+            </h3>
+
+            <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Title -->
+                <div class="mb-4">
+                    <label for="{{ form.title.id_for_label }}" class="form-label fw-medium">
+                        Title <span class="text-danger">*</span>
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.title.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Category -->
+                <div class="mb-4">
+                    <label for="{{ form.category.id_for_label }}" class="form-label fw-medium">
+                        Category <span class="text-danger">*</span>
+                    </label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.category.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Tags (assuming it's a multiple select or tags input) -->
+                <div class="mb-4">
+                    <label for="{{ form.tags.id_for_label }}" class="form-label fw-medium">
+                        Tags (separate with commas or select multiple)
+                    </label>
+                    {{ form.tags }}
+                    {% if form.tags.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.tags.errors.0 }}
+                        </div>
+                    {% endif %}
+                    <small class="form-text text-muted">
+                        Example: python, webdev, productivity, travel
+                    </small>
+                </div>
+
+                <!-- Content (assuming it's a textarea or rich text) -->
+                <div class="mb-4">
+                    <label for="{{ form.content.id_for_label }}" class="form-label fw-medium">
+                        Content <span class="text-danger">*</span>
+                    </label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.content.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Featured Image -->
+                <div class="mb-4">
+                    <label for="{{ form.image.id_for_label }}" class="form-label fw-medium">
+                        Featured Image
+                    </label>
+                    {{ form.image }}
+                    <small class="form-text text-muted">
+                        Recommended size: 1200×630 px • Max 5MB
+                    </small>
+                    {% if form.image.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.image.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Status -->
+                <div class="mb-5">
+                    <label class="form-label fw-medium">Status</label>
+                    <div class="d-flex gap-4 flex-wrap">
+                        {{ form.status }}
+                    </div>
+                    {% if form.status.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.status.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Submit buttons -->
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <button type="submit" name="action" value="publish"
+                            class="btn btn-primary btn-lg px-5 shadow">
+                        <i class="bi bi-send-fill me-2"></i>Publish Now
+                    </button>
+
+                    <button type="submit" name="action" value="draft"
+                            class="btn btn-outline-secondary btn-lg px-5">
+                        <i class="bi bi-save me-2"></i>Save as Draft
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+/* ────────────────────────────────────────────────
+   Create Post – matches category/blog aesthetic
+───────────────────────────────────────────────── */
+
+.category-hero {
+  background: linear-gradient(135deg,
+    rgba(249,250,251,0.97) 0%,
+    rgba(243,244,246,0.94) 50%,
+    rgba(59,130,246,0.07) 100%);
+  padding: 4.5rem 0 3.5rem;
+  margin: -1rem -1rem 4rem -1rem;
+  border-radius: 0 0 32px 32px;
+  position: relative;
+}
+
+.category-badge {
+  background: rgba(59,130,246,0.9);
+  color: white;
+  padding: 0.45rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 3px 15px rgba(59,130,246,0.22);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.8rem;
+}
+
+.page-subtitle {
+  font-size: 1.18rem;
+  color: #4b5563;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.post-card {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  box-shadow: 0 12px 44px rgba(0,0,0,0.08);
+  transition: all 0.38s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+}
+
+.form-control, .form-select {
+  border-radius: 12px;
+  font-size: 1.05rem;
+  padding: 0.9rem 1.4rem;
+  background: rgba(249,250,251,0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(209,213,219,0.6);
+  transition: all 0.25s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 0.25rem rgba(59,130,246,0.18);
+  background: white;
+}
+
+.form-label {
+  color: #374151;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(59,130,246,0.28);
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.6rem;
+  }
+  .category-hero {
+    padding: 3.5rem 0 2.5rem;
+  }
+  .post-content {
+    padding: 2rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .d-flex.gap-3 {
+    flex-direction: column;
+  }
+  .btn-lg {
+    width: 100%;
+  }
+}
+</style>
+
+{% endblock %}

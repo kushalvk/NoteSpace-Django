@@ -1,0 +1,496 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile – NoteSpace{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 780px;">
+
+    <!-- ✨ Premium Header -->
+    <section class="profile-edit-hero mb-6">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content text-center position-relative z-10">
+                <div class="edit-badge mb-4 d-inline-flex">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    <span>Edit Profile</span>
+                </div>
+                <h1 class="page-title mb-3">Perfect Your Profile</h1>
+                <p class="page-subtitle lead">
+                    Make a lasting first impression on the NoteSpace community
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ FIXED Premium Edit Form -->
+    <div class="edit-form-container mx-auto">
+        <div class="form-card elevate-on-hover">
+            <div class="card-header text-center py-5 px-4">
+                <h2 class="section-title mb-2">Profile Details</h2>
+                <div class="section-subtitle text-muted fs-6">Update your personal information</div>
+            </div>
+
+            <div class="card-body p-4 p-lg-6">
+                <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Profile Picture Section -->
+                    {% if form.profile_picture %}
+                    <div class="profile-pic-section text-center mb-6 pb-4">
+                        <label class="upload-label fw-bold fs-5 mb-4 d-block">
+                            <i class="bi bi-person-circle fs-1 text-muted mb-3 d-block"></i>
+                            Profile Picture
+                        </label>
+
+                        <div class="avatar-container mx-auto mb-4 position-relative">
+                            {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="Current avatar"
+                                class="avatar-preview rounded-circle shadow-glow img-fluid">
+                            <div class="avatar-overlay">
+                                <i class="bi bi-camera-fill"></i>
+                                <span>Change</span>
+                            </div>
+                            {% else %}
+                            <div
+                                class="avatar-fallback rounded-circle d-flex align-items-center justify-content-center shadow-glow">
+                                {{ user.username|slice:":1"|upper }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="file-input-wrapper mb-3">
+                            {{ form.profile_picture }}
+                            <label for="{{ form.profile_picture.id_for_label }}" class="file-label d-block w-100">
+                                <i class="bi bi-cloud-upload me-2"></i>
+                                Choose new photo
+                            </label>
+                        </div>
+                        <small class="upload-hint text-muted fs-6">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            Recommended: 400×400px • JPG, PNG • Max 2MB
+                        </small>
+
+                        {% if form.profile_picture.errors %}
+                        <div class="alert alert-danger mt-3 px-4 py-3 rounded-3 shadow-sm">
+                            {{ form.profile_picture.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <!-- FIXED Form Fields Grid -->
+                    <div class="form-grid-container">
+                        {% for field in form.visible_fields %}
+                        {% if field.name != "profile_picture" %}
+                        <div
+                            class="form-group {% if field.name in 'first_name,last_name' %}col-lg-6 col-md-6{% endif %} col-12">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold mb-3">
+                                {{ field.label }}
+                                {% if field.field.required %}
+                                <span class="required-mark">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="input-wrapper position-relative">
+                                {{ field }}
+                            </div>
+                            {% if field.help_text %}
+                            <div class="field-hint mt-3 pt-2">
+                                <i class="bi bi-lightbulb me-2"></i>
+                                {{ field.help_text }}
+                            </div>
+                            {% endif %}
+                            {% if field.errors %}
+                            <div class="field-error mt-3 pt-2">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                {{ field.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions mt-7 pt-5 border-top border-light">
+                        <div class="row g-4 g-lg-0 align-items-center justify-content-center">
+                            <div class="col-12 col-lg-5 col-md-6">
+                                <center>
+                                    <button type="submit"
+                                        class="action-btn primary-gradient w-100 py-4 px-6 fs-5 fw-bold shadow-xl rounded-3 lh-sm">
+                                        <i class="bi bi-check-circle-fill me-3"></i>
+                                        <span>Save Changes</span>
+                                    </button>
+                                </center>
+                            </div>
+                            <div class="col-12 col-lg-5 col-md-6">
+                                <a href="{% url 'profile' request.user.username %}"
+                                    class="action-btn secondary-outline w-100 py-4 px-6 fs-5 fw-bold shadow-lg rounded-3 lh-sm text-decoration-none d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-arrow-left me-3"></i>
+                                    <span>Back to Profile</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* ────────────────────────────────────────────────
+    ✨ FIXED PREMIUM EDIT PROFILE – Perfect Spacing
+    ─────────────────────────────────────────────── */
+
+    /* Reset & Base */
+    .form-group {
+        margin-bottom: 0 !important;
+    }
+
+    /* Hero Section (unchanged) */
+    .profile-edit-hero {
+        background: linear-gradient(135deg,
+                rgba(59, 130, 246, 0.06) 0%,
+                rgba(99, 165, 250, 0.04) 50%,
+                rgba(249, 250, 251, 0.98) 100%);
+        padding: 6rem 0 5rem;
+        margin: -1rem -1rem 6rem -1rem;
+        border-radius: 0 0 48px 48px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(99, 165, 250, 0.06) 0%, transparent 50%);
+        z-index: 1;
+    }
+
+    /* Badge */
+    .edit-badge {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(12px);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Typography */
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.2rem, 5vw, 3.6rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.1;
+    }
+
+    .page-subtitle {
+        color: #64748b;
+        font-size: 1.25rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Main Form Card - FIXED */
+    .edit-form-container {
+        max-width: 760px;
+    }
+
+    .form-card {
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(28px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 32px;
+        box-shadow: 0 24px 72px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.04) 0%, rgba(99, 165, 250, 0.02) 100%);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+        padding: 2.5rem 2rem 2rem !important;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    /* Profile Picture - FIXED */
+    .avatar-container {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .avatar-preview,
+    .avatar-fallback {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+        border: 5px solid white;
+        transition: all 0.4s ease;
+        box-shadow: 0 20px 60px rgba(59, 130, 246, 0.25);
+    }
+
+    .avatar-fallback {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        font-size: 4.5rem;
+        font-weight: 700;
+    }
+
+    /* FIXED FORM GRID */
+    .form-grid-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    /* CRITICAL INPUT FIXES */
+    .input-wrapper {
+        width: 100%;
+        min-height: 60px;
+    }
+
+    .form-control,
+    .form-select,
+    .input-wrapper input,
+    .input-wrapper select,
+    .input-wrapper textarea {
+        width: 100% !important;
+        height: 60px !important;
+        padding: 1.1rem 1.75rem !important;
+        border-radius: 18px !important;
+        border: 2px solid rgba(209, 213, 219, 0.6) !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        color: #374151 !important;
+        font-size: 1.05rem !important;
+        line-height: 1.5 !important;
+        box-sizing: border-box !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+        display: block !important;
+    }
+
+    .form-control::placeholder,
+    .form-select::placeholder {
+        color: #9ca3af !important;
+        opacity: 1 !important;
+    }
+
+    .form-control:focus,
+    .form-select:focus,
+    .input-wrapper input:focus,
+    .input-wrapper select:focus,
+    .input-wrapper textarea:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15), 0 12px 32px rgba(59, 130, 246, 0.2) !important;
+        background: white !important;
+        transform: translateY(-2px) !important;
+        outline: none !important;
+        color: #1f2937 !important;
+    }
+
+    .form-label {
+        color: #374151 !important;
+        margin-bottom: 1rem !important;
+        display: block !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+    }
+
+    .required-mark {
+        color: #ef4444 !important;
+        margin-left: 0.25rem;
+    }
+
+    /* File Input Fix */
+    .file-input-wrapper {
+        position: relative;
+        margin-bottom: 1rem !important;
+    }
+
+    .file-input-wrapper input[type="file"] {
+        display: none !important;
+    }
+
+    .file-label {
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border: 2px dashed rgba(59, 130, 246, 0.4);
+        color: #3b82f6;
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .file-label:hover {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        border-color: #3b82f6;
+        transform: translateY(-2px);
+    }
+
+    /* Helper Text */
+    .field-hint,
+    .upload-hint {
+        color: #6b7280 !important;
+        font-size: 0.95rem !important;
+        display: flex;
+        align-items: center;
+        line-height: 1.5;
+    }
+
+    .field-error {
+        color: #dc2626 !important;
+        font-size: 0.95rem !important;
+        display: flex;
+        align-items: center;
+        line-height: 1.5;
+    }
+
+    /* Action Buttons - FIXED */
+    .form-actions {
+        padding-top: 2.5rem !important;
+        margin-top: 3rem !important;
+    }
+
+    .action-btn {
+        height: 68px !important;
+        border-radius: 20px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px;
+        border: none !important;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+    }
+
+    .action-btn.primary-gradient {
+        height: 40px !important;
+        margin-bottom: 40px !important;
+        padding: 1.75rem 3rem !important;
+        font-size: 1.4rem !important;
+        border-radius: 24px !important;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%) !important;
+        color: white !important;
+        box-shadow: 0 12px 36px rgba(59, 130, 246, 0.4) !important;
+    }
+
+    .action-btn.primary-gradient:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 20px 48px rgba(59, 130, 246, 0.5) !important;
+    }
+
+    .action-btn.secondary-outline {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #374151 !important;
+        border: 2px solid rgba(209, 213, 219, 0.8) !important;
+        backdrop-filter: blur(12px) !important;
+    }
+
+    .action-btn.secondary-outline:hover {
+        background: #f8fafc !important;
+        transform: translateY(-4px) !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+        border-color: #3b82f6 !important;
+        color: #3b82f6 !important;
+    }
+
+    /* Hover Lift */
+    .elevate-on-hover:hover {
+        transform: translateY(-12px) !important;
+        box-shadow: 0 40px 88px rgba(0, 0, 0, 0.18) !important;
+    }
+
+    /* Responsive Fixes */
+    @media (max-width: 992px) {
+        .form-grid-container {
+            gap: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 2rem 1.5rem !important;
+        }
+
+        .page-title {
+            font-size: 2.5rem !important;
+        }
+
+        .form-grid-container {
+            gap: 1.75rem;
+        }
+
+        .action-btn {
+            height: 60px !important;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .form-actions .row>div {
+            margin-bottom: 1.25rem !important;
+        }
+
+        .card-header {
+            padding: 2rem 1.5rem 1.75rem !important;
+        }
+    }
+
+    /* Ensure text visibility */
+    * {
+        box-sizing: border-box;
+    }
+
+    .form-control,
+    .form-select {
+        min-height: 56px !important;
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    textarea.form-control {
+        height: auto !important;
+        min-height: 120px !important;
+        resize: vertical;
+    }
+</style>
+
+{% endblock %}

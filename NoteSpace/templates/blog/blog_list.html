@@ -27,18 +27,11 @@
             <article class="post-card">
                 <div class="post-image">
                     <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
-                    <span class="post-category">{{ post.category }}</span>
+                    <a href="/category/{{ post.category.slug }}/"><span class="post-category">{{ post.category.name }}</span></a>
                 </div>
                 <div class="post-content">
                     <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                     <p>{{ post.content|truncatewords:18 }}</p>
-                    
-                    <p>
-                        <a href="/category/{{ post.category.slug }}/">
-                            {{ post.category.name }}
-                        </a>
-                    </p>
-
                     <div class="post-meta">
                         <time datetime="{{ post.created|date:'Y-m-d' }}">{{ post.created|date:"M d, Y" }}</time>
                         <a href="{{ post.get_absolute_url }}" class="read-more">Read Story →</a>

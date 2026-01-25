@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manage Categories – NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Hero-like header section -->
+    <section class="category-hero mb-5">
+        <div class="container">
+            <div class="hero-content text-center">
+                <span class="category-badge">Managed by Admin</span>
+                <h1 class="page-title">Category Management</h1>
+                <p class="page-subtitle">
+                    Organize and manage all blog categories
+                    <br>
+                    <small class="text-muted opacity-75">Currently {{ categories|length }} categories</small>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add new category – glassmorphism card -->
+    {% if request.user.is_staff %}
+    <div class="post-card mb-5" style="max-width: 720px; margin-left: auto; margin-right: auto;">
+        <div class="post-content">
+            <h3 class="mb-4" style="color: #111827;">Create New Category</h3>
+
+            <form method="POST" class="d-flex flex-column flex-sm-row gap-3">
+                {% csrf_token %}
+
+                <input type="text" name="name" class="form-control form-control-lg border-0 shadow-sm"
+                    placeholder="Category name (e.g. Travel, Technology, Mindfulness…)" required autofocus
+                    style="background: rgba(249,250,251,0.7); backdrop-filter: blur(8px);">
+
+                <button type="submit" class="btn btn-primary btn-lg px-5 shadow"
+                    style="background: linear-gradient(135deg, #3b82f6, #2563eb); border: none;">
+                    <i class="bi bi-plus-lg me-2"></i>Add
+                </button>
+            </form>
+
+            {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center"
+                    role="alert">
+                    <i class="bi bi-info-circle-fill me-3 fs-4"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Categories list -->
+    {% if categories %}
+    <div class="post-grid">
+        {% for c in categories %}
+        <div class="post-card">
+            <div class="post-content">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.4rem;">{{ c.name }}</h3>
+                        <div class="small text-muted font-monospace">{{ c.slug }}</div>
+                    </div>
+                    {% if request.user.is_staff %}
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'edit_category' c.id %}" class="btn btn-sm btn-outline-primary px-3">
+                            <i class="bi bi-pencil me-1"></i>Edit
+                        </a>
+                        <a href="{% url 'delete_category' c.id %}" class="btn btn-sm btn-outline-danger px-3"
+                            onclick="return confirm('Delete category «{{ c.name }}»? This cannot be undone.');">
+                            <i class="bi bi-trash3 me-1"></i>Delete
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if request.user.is_staff %}
+                <div class="small text-muted mt-2">
+                    ID: {{ c.id }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="empty-state"
+        style="min-height: 400px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <div class="empty-icon mb-4" style="font-size: 5rem; opacity: 0.6;">📁</div>
+        <h3 class="mb-3">No categories yet</h3>
+        <p class="text-muted mb-4">Start by creating your first category above.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+
+<style>
+    /* ────────────────────────────────────────────────
+   Category Management – aligned with public category page
+───────────────────────────────────────────────── */
+
+    /* Reuse same hero style as category page but lighter */
+    .category-hero {
+        background: linear-gradient(135deg,
+                rgba(249, 250, 251, 0.98) 0%,
+                rgba(243, 244, 246, 0.95) 50%,
+                rgba(59, 130, 246, 0.08) 100%);
+        padding: 4.5rem 0 3.5rem;
+        border-radius: 0 0 32px 32px;
+        margin: -1rem -1rem 3rem -1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-badge {
+        background: rgba(59, 130, 246, 0.9);
+        color: white;
+        padding: 0.45rem 1.1rem;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 3px 15px rgba(59, 130, 246, 0.25);
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.2rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.8rem;
+    }
+
+    .page-subtitle {
+        font-size: 1.18rem;
+        color: #4b5563;
+        max-width: 620px;
+        margin: 0 auto;
+    }
+
+    /* Reuse post-card style from category.css */
+    .post-card {
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 20px;
+        box-shadow: 0 10px 38px rgba(0, 0, 0, 0.07);
+        transition: all 0.38s ease;
+        margin-bottom: 20px;
+    }
+
+    .post-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.14);
+    }
+
+    /* Form input styling matching public pages */
+    .form-control-lg {
+        border-radius: 12px;
+        font-size: 1.05rem;
+        padding: 0.9rem 1.4rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .category-hero {
+            padding: 3.5rem 0 2.5rem;
+        }
+
+        .page-title {
+            font-size: 2.6rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .d-flex.flex-column.flex-sm-row {
+            flex-direction: column !important;
+        }
+
+        .btn-lg {
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock %}
