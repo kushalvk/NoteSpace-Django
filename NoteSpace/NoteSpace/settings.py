@@ -36,6 +36,10 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
 ]
 
+DEBUG = os.environ.get("DEBUG") == "True"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "blog.middleware.LoginRequiredMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'NoteSpace.urls'
