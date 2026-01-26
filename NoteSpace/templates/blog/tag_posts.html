@@ -43,7 +43,7 @@
         <article class="post-card">
             <div class="post-image position-relative">
                 {% if post.image %}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy" class="w-100">
+                <img src="{{ SUPABASE_URL }}/storage/v1/object/public/notespace/{{ post.image }}" alt="{{ post.title }}" loading="lazy" class="w-100">
                 {% else %}
                 <div class="no-image-placeholder d-flex align-items-center justify-content-center">
                     <i class="bi bi-journal-text fs-1 text-muted"></i>

@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Privacy Policy – NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 920px;">
+
+    <!-- Hero Header -->
+    <section class="policy-hero mb-6 pb-4">
+        <div class="container">
+            <div class="hero-content text-center position-relative z-10">
+                <span class="policy-badge mb-4 d-inline-flex align-items-center">
+                    <i class="bi bi-shield-lock-fill me-2"></i>
+                    Privacy Policy
+                </span>
+
+                <h1 class="page-title mb-3">
+                    Your Privacy Matters
+                </h1>
+
+                <p class="page-subtitle lead text-muted mx-auto" style="max-width: 760px;">
+                    At NoteSpace, we are committed to protecting your personal information and giving you transparency
+                    and control over your data.
+                </p>
+
+                <p class="text-muted small mt-4">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Card -->
+    <div class="post-card mx-auto shadow-xl" style="border-radius: 28px; overflow: hidden;">
+        <div class="card-body p-5 p-md-6">
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-info-circle-fill me-3 text-primary"></i>
+                    1. Information We Collect
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We only collect the information you voluntarily provide when you create an account, publish content,
+                    or interact with the platform. This includes:
+                </p>
+                <ul class="policy-list fs-5 lh-lg text-muted">
+                    <li>Your username, email address, and optional profile details</li>
+                    <li>Content you publish (posts, comments, bio)</li>
+                    <li>Technical data (IP address, browser type, device info — anonymized where possible)</li>
+                </ul>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-gear-fill me-3 text-success"></i>
+                    2. How We Use Your Information
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    Your data helps us deliver and improve NoteSpace:
+                </p>
+                <ul class="policy-list fs-5 lh-lg text-muted">
+                    <li>To authenticate and personalize your account</li>
+                    <li>To display and distribute your published content</li>
+                    <li>To send important service notifications (e.g. password reset)</li>
+                    <li>To detect abuse and protect the platform</li>
+                </ul>
+                <p class="fs-5 lh-lg text-muted mt-3">
+                    We <strong>never sell</strong> your personal information to third parties.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-cookie me-3 text-warning"></i>
+                    3. Cookies & Tracking
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We use essential cookies to keep you logged in and provide core functionality.
+                    Optional analytics cookies help us understand how people use NoteSpace so we can make it better.
+                </p>
+                <p class="fs-5 lh-lg text-muted mt-3">
+                    You can manage or disable non-essential cookies through your browser settings.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-lock-fill me-3 text-info"></i>
+                    4. Data Protection & Security
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We use industry-standard encryption, secure hosting, and regular security audits to protect your
+                    data.
+                    Your content is stored securely and only accessible to you and authorized platform administrators.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-person-check-fill me-3 text-purple"></i>
+                    5. Your Rights & Choices
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    You have full control over your data:
+                </p>
+                <ul class="policy-list fs-5 lh-lg text-muted">
+                    <li>Edit or delete your profile and posts at any time</li>
+                    <li>Request a copy of your data</li>
+                    <li>Delete your account permanently</li>
+                </ul>
+                <p class="fs-5 lh-lg text-muted mt-3">
+                    For any privacy-related questions, contact us at <a href="mailto:privacy@notespace.in"
+                        class="text-primary">privacy@notespace.in</a>.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    /* ────────────────────────────────────────────────
+   Privacy Policy – premium & elegant
+───────────────────────────────────────────────── */
+
+    .policy-hero {
+        background: linear-gradient(135deg,
+                rgba(249, 250, 251, 0.99) 0%,
+                rgba(243, 244, 246, 0.97) 50%,
+                rgba(59, 130, 246, 0.06) 100%);
+        padding: 5rem 0 4rem;
+        margin: -1rem -1rem 5rem -1rem;
+        border-radius: 0 0 40px 40px;
+    }
+
+    .contact-badge,
+    .policy-badge {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(12px);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 6vw, 4.2rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.15;
+    }
+
+    .post-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+
+    .policy-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .policy-list li {
+        margin-bottom: 1.2rem;
+        font-size: 1.15rem;
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .policy-list li::before {
+        content: "•";
+        color: #3b82f6;
+        position: absolute;
+        left: 0;
+        font-size: 1.8rem;
+        line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2.8rem;
+        }
+
+        .policy-hero {
+            padding: 4rem 0 3rem;
+        }
+    }
+</style>
+
+{% endblock %}

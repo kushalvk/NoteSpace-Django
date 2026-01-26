@@ -428,8 +428,9 @@
                     <a href="{% url 'manage_tags' %}" class="nav-item">Tags</a>
                     {% if user.is_authenticated %}
                     <a href="{% url 'profile' user.username %}" class="nav-item">My Profile</a>
+                    <a href="{% url 'search' %}" class="nav-item">Search</a>
+                    <a href="{% url 'draft_posts' %}" class="nav-item">📝 My Drafts</a>
                     {% endif %}
-                    <a href="#" class="nav-item">About</a>
                 </div>
 
                 <div class="auth-section">
@@ -468,18 +469,18 @@
                     <h4>Explore</h4>
                     <ul>
                         <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="#">All Blogs</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Latest Posts</a></li>
+                        <li><a href="/blogs/">All Blogs</a></li>
+                        <li><a href="{% url 'manage_categories' %}">Categories</a></li>
+                        <li><a href="/blogs/">Latest Posts</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>

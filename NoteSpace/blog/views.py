@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
+from django.db.models import Q
+from django.contrib import messages
+from .storage import upload_to_supabase
 
 # Default
 def home(request):
@@ -170,12 +173,21 @@ def tag_posts(request, name):
 def create_post(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+
+            # Upload image to Supabase
+            if request.FILES.get("image"):
+                image_file = request.FILES["image"]
+                supabase_path = upload_to_supabase(image_file)
+                post.image = supabase_path   # store only path
+
             post.save()
             form.save_m2m()
             return redirect("blogs")
+
     else:
         form = PostForm()
 
@@ -208,3 +220,88 @@ def edit_profile(request):
         form = ProfileForm(instance=user)
 
     return render(request, "blog/edit_profile.html", {"form": form})
+
+# search
+
+@login_required
+def search(request):
+    query = request.GET.get("q", "").strip()
+
+    posts = Post.objects.filter(status="published")
+
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query) |
+            Q(category__name__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+
+    return render(request, "blog/search.html", {
+        "query": query,
+        "posts": posts
+    })
+
+def about(request):
+    return render(request, "blog/about.html")
+
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+
+        messages.success(request, "Thank you! We received your message.")
+
+    return render(request, "blog/contact.html")
+
+def privacy(request):
+    return render(request, "blog/privacy.html")
+
+def terms(request):
+    return render(request, "blog/terms.html")
+
+
+@login_required
+def draft_posts(request):
+    drafts = Post.objects.filter(author=request.user, status="draft").order_by("-created_at")
+    return render(request, "blog/drafts.html", {"drafts": drafts})
+
+
+@login_required
+def edit_draft(request, id):
+    post = get_object_or_404(Post, id=id, author=request.user, status="draft")
+
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+
+            # If a NEW image is uploaded → send to Supabase
+            if request.FILES.get("image"):
+                file = request.FILES["image"]
+                supabase_path = upload_to_supabase(file)
+                post.image = supabase_path   # store Supabase path
+
+            # If no file → keep existing image automatically
+            post.save()
+            form.save_m2m()
+
+            return redirect("draft_posts")
+
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/edit_draft.html", {
+        "form": form,
+        "post": post
+    })
+
+@login_required
+def publish_draft(request, id):
+    post = get_object_or_404(Post, id=id, author=request.user, status="draft")
+    post.status = "published"
+    post.save()
+    return redirect("draft_posts")

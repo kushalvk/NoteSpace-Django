@@ -18,4 +18,12 @@ urlpatterns = [
     path("profile/<str:username>/", views.profile, name="profile"),
     path("blog/<slug:slug>/", views.post_detail, name="post_detail"),
     path("tag/<str:name>/", views.tag_posts, name="tag_posts"),
+    path("search/", views.search, name="search"),
+    path("about/", views.about, name="about"),
+    path("contact/", views.contact, name="contact"),
+    path("privacy/", views.privacy, name="privacy"),
+    path("terms/", views.terms, name="terms"),
+    path("dashboard/drafts/", views.draft_posts, name="draft_posts"),
+    path("dashboard/drafts/edit/<int:id>/", views.edit_draft, name="edit_draft"),
+    path("dashboard/drafts/publish/<int:id>/", views.publish_draft, name="publish_draft"),
 ]

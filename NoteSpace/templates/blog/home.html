@@ -6,10 +6,11 @@
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+<!-- Hero: Featured latest post -->
 <section class="hero">
     {% if posts %}
     <div class="hero-image">
-        <img src="{{ posts.0.image.url }}" alt="{{ posts.0.title }}">
+        <img src="{{ SUPABASE_URL }}/storage/v1/object/public/notespace/{{ posts.0.image.url }}" alt="{{ posts.0.title }}">
     </div>
     <div class="hero-content">
         <span class="category">{{ posts.0.category }}</span>
@@ -17,29 +18,56 @@
         <p>{{ posts.0.content|truncatewords:40 }}</p>
         <a href="{{ posts.0.get_absolute_url }}" class="btn">Read More →</a>
     </div>
+    {% else %}
+    <div class="hero-content text-center" style="grid-column: 1 / -1; padding: 6rem 2rem;">
+        <h1>Welcome to NoteSpace</h1>
+        <p class="lead mt-3">No stories yet — be the first to share yours!</p>
+    </div>
     {% endif %}
 </section>
 
+<!-- Latest 3 Posts Grid -->
 <section class="posts-section">
     <div class="container">
-        <h2>Latest Blog Posts</h2>
+        <h2 class="text-center mb-5">Latest Blog Posts</h2>
+
+        {% if posts %}
         <div class="post-grid">
-            {% for post in posts %}
+            {% for post in posts|slice:":3" %}
             <article class="post-card">
                 <div class="post-image">
-                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    <img src="https://mtuaecfkclpfaqwxqxqz.supabase.co/storage/v1/object/public/notespace/{{ post.image }}" alt="{{ post.title }}" loading="lazy">
                 </div>
                 <div class="post-content">
                     <span class="post-category">{{ post.category }}</span>
-                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <h3>
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h3>
                     <p>{{ post.content|truncatewords:22 }}</p>
-                    <time datetime="{{ post.created|date:'Y-m-d' }}">{{ post.created|date:"M d, Y" }}</time>
+                    <time datetime="{{ post.created|date:'Y-m-d' }}" class="d-block mt-3 text-muted small">
+                        {{ post.created|date:"M d, Y" }}
+                    </time>
                 </div>
             </article>
-            {% empty %}
-            <p>No posts yet.</p>
             {% endfor %}
         </div>
+
+        <!-- "View All" button if there are more than 3 posts -->
+        {% if posts|length > 3 %}
+        <div class="text-center mt-5">
+            <a href="{% url 'blogs' %}" class="vrbtn btn btn-outline-primary btn-lg px-5 py-3">
+                View All Posts →
+            </a>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="text-center py-5 my-5 text-muted">
+            <div class="display-1 opacity-25 mb-4">📝</div>
+            <h4>No posts published yet</h4>
+            <p class="lead">Be the first to share your story!</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 

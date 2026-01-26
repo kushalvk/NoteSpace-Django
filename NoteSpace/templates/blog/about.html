@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Premium Hero Section -->
+    <section class="about-hero mb-6 pb-4">
+        <div class="container">
+            <div class="hero-content text-center position-relative z-10">
+                <span class="about-badge mb-4 d-inline-flex align-items-center">
+                    <i class="bi bi-stars me-2"></i>
+                    About NoteSpace
+                </span>
+
+                <h1 class="page-title mb-3">
+                    Where Ideas Find Their Home
+                </h1>
+
+                <p class="lead text-muted mx-auto" style="max-width: 720px;">
+                    A clean, modern, and thoughtful space for writers, thinkers, creators, and dreamers to share
+                    stories, knowledge, and inspiration.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is NoteSpace? -->
+    <section class="row align-items-center g-5 mb-6">
+        <div class="col-lg-6">
+            <div class="about-card p-5 rounded-4 shadow-lg">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-journal-bookmark-fill me-3 text-primary"></i>
+                    What is NoteSpace?
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    NoteSpace is a minimalist yet powerful blogging and knowledge-sharing platform.
+                    Designed for people who value clarity, beauty, and meaningful connection over clutter.
+                </p>
+                <p class="fs-5 lh-lg text-muted mt-4">
+                    From personal reflections and travel diaries to technical deep-dives, poetry, tutorials, and
+                    creative essays —
+                    every voice has a place here.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="about-image-wrapper rounded-4 shadow-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&auto=format&fit=crop"
+                    alt="Person writing on laptop in cozy space" class="img-fluid w-100">
+            </div>
+        </div>
+    </section>
+
+    <!-- Why NoteSpace? -->
+    <section class="bg-gradient-light rounded-4 p-5 p-md-6 mb-6 shadow-lg">
+        <h2 class="section-title text-center mb-5">
+            Why Writers Choose NoteSpace
+        </h2>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-pencil-square display-4 text-primary mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Beautiful Writing Experience</h5>
+                    <p class="text-muted">Distraction-free editor with elegant typography and real-time preview</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-tags display-4 text-success mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Smart Organization</h5>
+                    <p class="text-muted">Categories, tags, and powerful search — find anything instantly</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-people display-4 text-info mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Community First</h5>
+                    <p class="text-muted">Connect with readers and fellow writers through comments and profiles</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-shield-lock display-4 text-warning mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Secure & Private</h5>
+                    <p class="text-muted">Your content, your control. Cloud-hosted images with full privacy</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-speedometer2 display-4 text-purple mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Fast & Modern</h5>
+                    <p class="text-muted">Lightning-fast loading, mobile-first design, built for 2026</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card p-4 rounded-3 text-center">
+                    <i class="bi bi-heart display-4 text-danger mb-3 d-block"></i>
+                    <h5 class="fw-semibold mb-3">Made with ❤️</h5>
+                    <p class="text-muted">Crafted in Gujarat, India — with passion for creators everywhere</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="text-center py-5 my-5">
+        <h2 class="section-title mb-4">Our Mission</h2>
+        <p class="lead mx-auto" style="max-width: 760px; line-height: 1.8;">
+            To create a clean, thoughtful digital space where every voice matters —
+            where ideas are shared freely, discovered easily, and remembered forever.
+        </p>
+        <div class="mt-5">
+            <span class="badge bg-gradient-primary text-white px-5 py-3 fs-5 rounded-pill shadow">
+                Join the movement
+            </span>
+        </div>
+    </section>
+
+</div>
+
+
+<style>
+    /* ────────────────────────────────────────────────
+   About Page – premium & consistent design
+───────────────────────────────────────────────── */
+
+    .about-hero {
+        background: linear-gradient(135deg,
+                rgba(249, 250, 251, 0.99) 0%,
+                rgba(243, 244, 246, 0.97) 50%,
+                rgba(59, 130, 246, 0.06) 100%);
+        padding: 6rem 0 5rem;
+        margin: -1rem -1rem 6rem -1rem;
+        border-radius: 0 0 48px 48px;
+        position: relative;
+    }
+
+    .about-badge {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(12px);
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 6vw, 4.2rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.15;
+    }
+
+    /* Why Cards */
+    .why-card {
+        margin-bottom: 1rem;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        box-shadow: 0 12px 44px rgba(0, 0, 0, 0.08);
+        transition: all 0.42s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .why-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 28px 64px rgba(0, 0, 0, 0.14);
+    }
+
+    /* Gradient Badge at bottom */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .page-title {
+            font-size: 3.2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 4.5rem 0 3.5rem;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+        }
+    }
+</style>
+
+{% endblock %}

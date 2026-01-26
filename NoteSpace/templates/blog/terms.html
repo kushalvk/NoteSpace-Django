@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Terms of Service – NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 920px;">
+
+    <!-- Premium Hero Header -->
+    <section class="policy-hero mb-6 pb-4">
+        <div class="container">
+            <div class="hero-content text-center position-relative z-10">
+                <span class="policy-badge mb-4 d-inline-flex align-items-center">
+                    <i class="bi bi-file-earmark-text-fill me-2"></i>
+                    Terms of Service
+                </span>
+
+                <h1 class="page-title mb-3">
+                    Terms of Service
+                </h1>
+
+                <p class="page-subtitle lead text-muted mx-auto" style="max-width: 760px;">
+                    By using NoteSpace, you agree to these terms. Please read them carefully.
+                </p>
+
+                <p class="text-muted small mt-4">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Card -->
+    <div class="post-card mx-auto shadow-xl" style="border-radius: 28px; overflow: hidden;">
+        <div class="card-body p-5 p-md-6">
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-person-check-fill me-3 text-primary"></i>
+                    1. Acceptance of Terms
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    By accessing or using NoteSpace, you agree to be bound by these Terms of Service
+                    and our Privacy Policy. If you do not agree, please do not use the platform.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-pencil-square me-3 text-success"></i>
+                    2. User Responsibility & Content
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    You are solely responsible for all content you post. You agree not to publish:
+                </p>
+                <ul class="policy-list fs-5 lh-lg text-muted">
+                    <li>Illegal, harmful, threatening, abusive, or harassing material</li>
+                    <li>Spam, scams, or misleading content</li>
+                    <li>Content that infringes on others' intellectual property</li>
+                </ul>
+                <p class="fs-5 lh-lg text-muted mt-3">
+                    We reserve the right to remove any content that violates these terms.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-copyright me-3 text-info"></i>
+                    3. Content Ownership & License
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    You retain ownership of the content you create. By publishing on NoteSpace,
+                    you grant us a non-exclusive, worldwide, royalty-free license to display,
+                    distribute, and promote your content on the platform.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-slash-circle me-3 text-warning"></i>
+                    4. Account Suspension & Termination
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We may suspend or terminate accounts that violate these terms, engage in abusive behavior,
+                    or pose a risk to the community. Repeated violations may result in permanent bans.
+                </p>
+            </div>
+
+            <div class="policy-section mb-5">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-cloud-slash me-3 text-purple"></i>
+                    5. Service Availability & Changes
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We strive to provide uninterrupted service but cannot guarantee 100% availability.
+                    We may modify, suspend, or discontinue any part of NoteSpace at any time.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-arrow-repeat me-3 text-secondary"></i>
+                    6. Changes to Terms
+                </h2>
+                <p class="fs-5 lh-lg text-muted">
+                    We may update these Terms of Service from time to time. Continued use of NoteSpace
+                    after changes constitutes acceptance of the updated terms.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    /* Same style as Privacy Policy – consistent look */
+    .policy-hero {
+        background: linear-gradient(135deg,
+                rgba(249, 250, 251, 0.99) 0%,
+                rgba(243, 244, 246, 0.97) 50%,
+                rgba(59, 130, 246, 0.06) 100%);
+        padding: 5rem 0 4rem;
+        margin: -1rem -1rem 5rem -1rem;
+        border-radius: 0 0 40px 40px;
+    }
+
+    .policy-badge {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(12px);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 6vw, 4.2rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.15;
+    }
+
+    .post-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+
+    .policy-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .policy-list li {
+        margin-bottom: 1.2rem;
+        font-size: 1.15rem;
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .policy-list li::before {
+        content: "•";
+        color: #3b82f6;
+        position: absolute;
+        left: 0;
+        font-size: 1.8rem;
+        line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2.8rem;
+        }
+
+        .policy-hero {
+            padding: 4rem 0 3rem;
+        }
+    }
+</style>
+
+{% endblock %}

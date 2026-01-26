@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us – NoteSpace{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 860px;">
+
+    <!-- Premium Hero Header -->
+    <section class="contact-hero mb-6 pb-4">
+        <div class="container">
+            <div class="hero-content text-center position-relative z-10">
+                <span class="contact-badge mb-4 d-inline-flex align-items-center">
+                    <i class="bi bi-envelope-heart me-2"></i>
+                    Get in Touch
+                </span>
+
+                <h1 class="page-title mb-3">
+                    We'd Love to Hear From You
+                </h1>
+
+                <p class="page-subtitle lead text-muted mx-auto" style="max-width: 720px;">
+                    Have a question, feedback, suggestion, or just want to say hi?
+                    Drop us a message — we read every one!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Card -->
+    <div class="post-card mx-auto shadow-xl" style="border-radius: 28px; overflow: hidden;">
+        <div class="card-body p-5 p-md-6">
+
+            {% if messages %}
+            <div class="mb-5">
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center"
+                    role="alert">
+                    <i class="bi bi-check-circle-fill me-3 fs-4"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Name -->
+                <div class="mb-5">
+                    <label class="form-label fw-semibold fs-5 mb-3">
+                        <i class="bi bi-person me-2 text-primary"></i>
+                        Your Name <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" name="name" class="form-control form-control-lg rounded-3 shadow-sm"
+                        placeholder="Your full name" required autofocus>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-5">
+                    <label class="form-label fw-semibold fs-5 mb-3">
+                        <i class="bi bi-envelope me-2 text-success"></i>
+                        Email Address <span class="text-danger">*</span>
+                    </label>
+                    <input type="email" name="email" class="form-control form-control-lg rounded-3 shadow-sm"
+                        placeholder="you@example.com" required>
+                </div>
+
+                <!-- Message -->
+                <div class="mb-6">
+                    <label class="form-label fw-semibold fs-5 mb-3">
+                        <i class="bi bi-chat-square-text me-2 text-info"></i>
+                        Your Message <span class="text-danger">*</span>
+                    </label>
+                    <textarea name="message" rows="6" class="form-control form-control-lg rounded-3 shadow-sm"
+                        placeholder="How can we help you today?" required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-5 pt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3 shadow-lg rounded-pill">
+                        <i class="bi bi-send-fill me-2"></i>
+                        Send Message
+                    </button>
+                </div>
+
+                <!-- Privacy note -->
+                <p class="text-center text-muted small mt-4">
+                    <i class="bi bi-lock me-1"></i>
+                    Your message is private and will only be seen by the NoteSpace team.
+                </p>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    /* ────────────────────────────────────────────────
+   Contact Us Page – premium & consistent
+───────────────────────────────────────────────── */
+
+    .contact-hero {
+        background: linear-gradient(135deg,
+                rgba(249, 250, 251, 0.99) 0%,
+                rgba(243, 244, 246, 0.97) 50%,
+                rgba(59, 130, 246, 0.06) 100%);
+        padding: 5rem 0 4rem;
+        margin: -1rem -1rem 5rem -1rem;
+        border-radius: 0 0 40px 40px;
+        position: relative;
+    }
+
+    .contact-badge {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(12px);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 6vw, 4.2rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.15;
+    }
+
+    .page-subtitle {
+        font-size: 1.25rem;
+        color: #64748b;
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .post-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-control-lg,
+    textarea.form-control {
+        border-radius: 16px;
+        padding: 1.25rem 1.75rem;
+        font-size: 1.1rem;
+        background: rgba(249, 250, 251, 0.85);
+        border: 1px solid rgba(209, 213, 219, 0.5);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-control-lg:focus,
+    textarea.form-control:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 0.3rem rgba(59, 130, 246, 0.18);
+        background: white;
+        transform: translateY(-2px);
+    }
+
+    .form-label {
+        color: #1f2937;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .required-mark {
+        color: #ef4444;
+        margin-left: 0.35rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        border: none;
+        transition: all 0.32s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 32px rgba(59, 130, 246, 0.32);
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2.8rem;
+        }
+
+        .contact-hero {
+            padding: 4rem 0 3rem;
+        }
+    }
+</style>
+
+{% endblock %}

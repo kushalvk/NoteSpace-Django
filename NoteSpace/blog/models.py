@@ -30,7 +30,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     content = models.TextField()
-    image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
+    image = models.FileField(upload_to="blog_images/")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
