@@ -42,7 +42,7 @@
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
           </h3>
           <p>{{ post.content|truncatewords:20 }}</p>
-          <a href="{{ post.get_absolute_url }}" class="read-more-btn">Read Story →</a>
+          <a href="{% url 'post_detail' post.slug %}" class="read-more-btn">Read Story →</a>
         </div>
       </article>
       {% empty %}
