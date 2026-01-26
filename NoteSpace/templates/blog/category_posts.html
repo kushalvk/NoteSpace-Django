@@ -29,7 +29,7 @@
       {% for post in posts %}
       <article class="post-card">
         <div class="post-image">
-          <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+          <img src="{{ SUPABASE_URL }}/storage/v1/object/public/notespace/{{ post.image }}" alt="{{ post.title }}" loading="lazy">
           <span class="post-category-badge">{{ category.name }}</span>
         </div>
         <div class="post-content">

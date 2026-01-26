@@ -32,14 +32,32 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 # Blog
-@login_required
 def blog_list(request):
-    posts = Post.objects.filter(status="published").order_by("-created_at")
-    paginator = Paginator(posts, 6)
+    category_slug = request.GET.get('category')
+    selected_category = None
+    selected_category_name = None
 
-    page_number = request.GET.get("page")
+    if category_slug:
+        try:
+            selected_category = Category.objects.get(slug=category_slug)
+            selected_category_name = selected_category.name
+            posts = Post.objects.filter(category=selected_category, status='published').order_by('-created')
+        except Category.DoesNotExist:
+            posts = Post.objects.filter(status="published").order_by("-created_at")
+    else:
+        posts = Post.objects.filter(status="published").order_by("-created_at")
+
+    # Pagination
+    paginator = Paginator(posts, 9)  # 9 posts per page
+    page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    context = {
+        'page_obj': page_obj,
+        'categories': Category.objects.all(),
+        'selected_category': category_slug,
+        'selected_category_name': selected_category_name,
+    }
     return render(request, "blog/blog_list.html", {"page_obj": page_obj})
 
 @login_required

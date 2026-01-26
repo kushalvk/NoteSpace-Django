@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}All Blogs - NoteSpace{% endblock %}
+
+{% block title %}All Stories - NoteSpace{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -14,44 +15,44 @@
 
 <section class="blogs-section">
     <div class="container">
-        <!-- Filter Bar (optional future use) -->
-        <div class="filters">
-            <a href="#" class="filter-btn active">All</a>
-            <a href="#" class="filter-btn">Technology</a>
-            <a href="#" class="filter-btn">Life</a>
-            <a href="#" class="filter-btn">Design</a>
-        </div>
 
+        <!-- Posts Grid -->
+        {% if page_obj %}
         <div class="post-grid">
             {% for post in page_obj %}
             <article class="post-card">
                 <div class="post-image">
-                    <img src="{{ SUPABASE_URL }}/storage/v1/object/public/notespace/{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-                    <a href="/category/{{ post.category.slug }}/"><span class="post-category">{{ post.category.name }}</span></a>
+                    <img src="{{ SUPABASE_URL }}/storage/v1/object/public/notespace/{{ post.image }}"
+                        alt="{{ post.title }}" loading="lazy">
+                    <a href="{% url 'category_posts' post.category.slug %}" class="post-category">
+                        {{ post.category.name }}
+                    </a>
                 </div>
                 <div class="post-content">
-                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <h3>
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h3>
                     <p>{{ post.content|truncatewords:18 }}</p>
                     <div class="post-meta">
-                        <time datetime="{{ post.created|date:'Y-m-d' }}">{{ post.created|date:"M d, Y" }}</time>
-                        <a href="{{ post.get_absolute_url }}" class="read-more">Read Story →</a>
+                        <time datetime="{{ post.created|date:'Y-m-d' }}">
+                            {{ post.created_at|date:"M d, Y" }}
+                        </time>
+                        <a href="{% url 'post_detail' post.slug %}" class="read-more">
+                            Read Story →
+                        </a>
                     </div>
                 </div>
             </article>
-            {% empty %}
-            <div class="empty-state">
-                <h3>No posts yet</h3>
-                <p>Be the first to share your story on NoteSpace!</p>
-            </div>
             {% endfor %}
         </div>
 
         <!-- Pagination -->
         {% if page_obj.paginator.num_pages > 1 %}
-        <nav class="pagination" aria-label="Blog pagination">
+        <nav class="pagination mt-5" aria-label="Blog pagination">
             <div class="pagination-container">
                 {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="pag-btn prev" rel="prev">
+                <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}"
+                    class="pag-btn prev" rel="prev">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                     </svg>
@@ -64,13 +65,17 @@
                     {% if page_obj.number == num %}
                     <span class="pag-num active">{{ num }}</span>
                     {% else %}
-                    <a href="?page={{ num }}" class="pag-num">{{ num }}</a>
+                    <a href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}"
+                        class="pag-num">
+                        {{ num }}
+                    </a>
                     {% endif %}
                     {% endfor %}
                 </div>
 
                 {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="pag-btn next" rel="next">
+                <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}"
+                    class="pag-btn next" rel="next">
                     Next
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
@@ -80,6 +85,21 @@
             </div>
         </nav>
         {% endif %}
+
+        {% else %}
+        <div class="empty-state text-center py-5 my-5">
+            <div class="display-1 text-muted opacity-50 mb-4">📚</div>
+            <h3 class="mb-3">No posts found</h3>
+            <p class="lead text-muted mb-4">
+                {% if selected_category %}
+                No stories in the category <strong>{{ selected_category_name }}</strong> yet.
+                {% else %}
+                No stories published yet.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
     </div>
 </section>
+
 {% endblock %}
