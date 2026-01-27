@@ -205,6 +205,9 @@ def create_post(request):
             post.save()
             form.save_m2m()
             return redirect("blogs")
+        
+        else:
+            print("FORM ERRORS:", form.errors)
 
     else:
         form = PostForm()
